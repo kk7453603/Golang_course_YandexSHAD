@@ -103,6 +103,10 @@ func TestGossip_TwoPeers(t *testing.T) {
 	time.Sleep(waitPeriod)
 	require.Equal(t, "sam", peer0.GetMembers()[peer1.Addr()].Name)
 
+	peer0.UpdateMeta(&meshpb.PeerMeta{Name: "alice"})
+	time.Sleep(waitPeriod)
+	require.Equal(t, "alice", peer1.GetMembers()[peer0.Addr()].Name)
+
 	stop1()
 	time.Sleep(waitPeriod)
 
