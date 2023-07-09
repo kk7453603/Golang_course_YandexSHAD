@@ -1,3 +1,5 @@
+[English](README-en.md)
+
 # tour of go
 
 Пройдите первую часть (Basics) tour of go на [сайте](https://tour.golang.org/welcome/1).
