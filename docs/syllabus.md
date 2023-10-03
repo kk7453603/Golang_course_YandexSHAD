@@ -1,5 +1,3 @@
-[English](syllabus-en.md)
-
 # Программа курса
 
 1. Введение. Программа курса. Отчётность по курсу, критерии
@@ -43,17 +41,16 @@
 
 8. database/sql, sqlx, работа с базами данных, redis.
 
-9. Generics. Generics features. Type params. Constraints. Type-checking. Type sets. Comparable interface.
-   Type interface. Inference.
-
-10. Reflection. reflect.Type and reflect.Value. struct tags. net/rpc. encoding/gob.
+9. Reflection. reflect.Type and reflect.Value. struct tags. net/rpc. encoding/gob.
    sync.Map. reflect.DeepEqual.
 
-11. Пакет io, реализации Reader и Writer из стандартной библиотеки.
+10. Пакет io, реализации Reader и Writer из стандартной библиотеки.
     Low-level programming. unsafe. Package binary. bytes.Buffer. cgo, syscall.
 
-12. Архитектура GC. Write barrier. Stack growth. GC pause. GOGC. sync.Pool. Шедулер
-    горутин. GOMACPROCS. Утечка тредов. Go tooling. pprof. CPU and Memory profiling. Кросс-компиляция. GOOS, GOARCH. CGO_ENABLED=0.
+11. Архитектура GC. Write barrier. Stack growth. GC pause. GOGC. sync.Pool. Шедулер
+    горутин. GOMACPROCS. Утечка тредов.
+
+12. Go tooling. pprof. CPU and Memory profiling. Кросс-компиляция. GOOS, GOARCH. CGO_ENABLED=0.
     Build tags. go modules. godoc. Code generation.
 
 13. go/types и x/analysis. Статический анализ го кода.
