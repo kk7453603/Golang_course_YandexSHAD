@@ -3,8 +3,8 @@
 Для работы с кодом нужен go 1.18 или выше.
 
 ```sh
-git clone https://gitlab.com/slon/shad-go.git
-cd shad-go
+git clone https://gitlab.atp-fivt.org/courses-public/golang/golang-2024s/go.git
+cd go
 go test ./sum/...
 ```
 
@@ -13,5 +13,4 @@ go test ./sum/...
 ## Информация
 
 - [Программа курса](docs/syllabus.md)
-- [Слайды](https://p.go.manytask.org/)
 - [Как прислать патч](CONTRIBUTING.md)
