@@ -2,7 +2,7 @@ package commands
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -58,7 +58,7 @@ func (d Deadlines) FindTask(name string) (*Group, *Task) {
 }
 
 func loadDeadlines(filename string) (Deadlines, error) {
-	b, err := ioutil.ReadFile(filename)
+	b, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}

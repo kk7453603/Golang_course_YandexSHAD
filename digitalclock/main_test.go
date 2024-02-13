@@ -5,12 +5,11 @@ import (
 	"fmt"
 	"image"
 	"image/png"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"testing"
@@ -125,7 +124,7 @@ func TestDigitalClock_valid(t *testing.T) {
 	port, stop := startServer(t)
 	defer stop()
 
-	files, err := ioutil.ReadDir("./testdata")
+	files, err := os.ReadDir("./testdata")
 	require.NoError(t, err)
 
 	c := &http.Client{Timeout: time.Second * 10}
@@ -142,7 +141,7 @@ func TestDigitalClock_valid(t *testing.T) {
 			u := fmt.Sprintf("http://localhost:%s/?%s", port, v.Encode())
 			img := queryImage(t, c, u)
 
-			expected, err := readImage(path.Join("testdata", f.Name()))
+			expected, err := readImage(filepath.Join("testdata", f.Name()))
 			require.NoError(t, err)
 
 			w, h := img.Bounds().Dx(), img.Bounds().Dy()

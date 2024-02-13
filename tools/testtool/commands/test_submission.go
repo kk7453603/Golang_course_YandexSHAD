@@ -6,7 +6,6 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -81,7 +80,7 @@ func mustParseDirFlag(name string, cmd *cobra.Command) string {
 
 // Check that repo dir contains problem subdir.
 func problemDirExists(repo, problem string) bool {
-	info, err := os.Stat(path.Join(repo, problem))
+	info, err := os.Stat(filepath.Join(repo, problem))
 	if err != nil {
 		return false
 	}
@@ -90,7 +89,7 @@ func problemDirExists(repo, problem string) bool {
 
 func testSubmission(studentRepo, privateRepo, problem string) error {
 	// Create temp directory to store all files required to test the solution.
-	tmpRepo, err := ioutil.TempDir("/tmp", problem+"-")
+	tmpRepo, err := os.MkdirTemp("/tmp", problem+"-")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -101,7 +100,7 @@ func testSubmission(studentRepo, privateRepo, problem string) error {
 	log.Printf("testing submission in %s", tmpRepo)
 
 	// Path to private problem folder.
-	privateProblem := path.Join(privateRepo, problem)
+	privateProblem := filepath.Join(privateRepo, problem)
 
 	// Copy student repo files to temp dir.
 	log.Printf("copying student repo")
@@ -119,7 +118,7 @@ func testSubmission(studentRepo, privateRepo, problem string) error {
 
 	// Copy testdata directory from private repo to temp dir.
 	log.Printf("copying testdata directory")
-	copyDir(privateRepo, path.Join(problem, testdataDir), tmpRepo)
+	copyDir(privateRepo, filepath.Join(problem, testdataDir), tmpRepo)
 
 	// Copy go.mod and go.sum from private repo to temp dir.
 	log.Printf("copying go.mod, go.sum and .golangci.yml")
@@ -209,7 +208,7 @@ func runLinter(testDir, problem string) error {
 
 // runTests runs all tests in directory with race detector.
 func runTests(testDir, privateRepo, problem string) error {
-	binCache, err := ioutil.TempDir("/tmp", "bincache")
+	binCache, err := os.MkdirTemp("/tmp", "bincache")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -218,7 +217,7 @@ func runTests(testDir, privateRepo, problem string) error {
 	}
 
 	var goCache string
-	goCache, err = ioutil.TempDir("/tmp", "gocache")
+	goCache, err = os.MkdirTemp("/tmp", "gocache")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -243,7 +242,7 @@ func runTests(testDir, privateRepo, problem string) error {
 		raceBinaries = make(map[string]string)
 	)
 
-	coverageReq := getCoverageRequirements(path.Join(privateRepo, problem))
+	coverageReq := getCoverageRequirements(filepath.Join(privateRepo, problem))
 	if coverageReq.Enabled {
 		log.Printf("required coverage: %.2f%%", coverageReq.Percent)
 	}
@@ -294,7 +293,7 @@ func runTests(testDir, privateRepo, problem string) error {
 	coverProfiles := []string{}
 	for testPkg, testBinary := range testBinaries {
 		relPath := strings.TrimPrefix(testPkg, moduleImportPath)
-		coverProfile := path.Join(os.TempDir(), randomName())
+		coverProfile := filepath.Join(os.TempDir(), randomName())
 
 		{
 			cmd := exec.Command(testBinary)

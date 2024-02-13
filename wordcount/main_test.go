@@ -4,10 +4,9 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 	"reflect"
 	"strconv"
 	"strings"
@@ -77,15 +76,15 @@ b`,
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			// Create temp directory.
-			testDir, err := ioutil.TempDir("", "wordcount-testdata-")
+			testDir, err := os.MkdirTemp("", "wordcount-testdata-")
 			require.NoError(t, err)
 			defer func() { _ = os.RemoveAll(testDir) }()
 
 			// Create test files in temp directory.
 			var files []string
 			for _, f := range tc.files {
-				file := path.Join(testDir, testtool.RandomName())
-				err = ioutil.WriteFile(file, []byte(f), 0644)
+				file := filepath.Join(testDir, testtool.RandomName())
+				err = os.WriteFile(file, []byte(f), 0644)
 				require.NoError(t, err)
 				files = append(files, file)
 			}

@@ -4,9 +4,8 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -62,18 +61,18 @@ func TestSort_fileNotFound(t *testing.T) {
 }
 
 func TestSort(t *testing.T) {
-	testDir := path.Join("./testdata", "sort")
+	testDir := filepath.Join("./testdata", "sort")
 
 	readTestCase := func(dir string) (in []string, out string) {
-		files, err := ioutil.ReadDir(dir)
+		files, err := os.ReadDir(dir)
 		require.NoError(t, err)
 
 		for _, f := range files {
 			if strings.HasPrefix(f.Name(), "in") {
-				in = append(in, path.Join(dir, f.Name()))
+				in = append(in, filepath.Join(dir, f.Name()))
 			}
 			if f.Name() == "out.txt" {
-				out = path.Join(dir, f.Name())
+				out = filepath.Join(dir, f.Name())
 			}
 		}
 
@@ -81,10 +80,10 @@ func TestSort(t *testing.T) {
 	}
 
 	for _, d := range listDirs(t, testDir) {
-		testCaseDir := path.Join(testDir, d)
+		testCaseDir := filepath.Join(testDir, d)
 
 		t.Run(d, func(t *testing.T) {
-			tmpDir, err := ioutil.TempDir("", fmt.Sprintf("sort%s-", d))
+			tmpDir, err := os.MkdirTemp("", fmt.Sprintf("sort%s-", d))
 			require.NoError(t, err)
 			defer func() { _ = os.RemoveAll(tmpDir) }()
 
@@ -95,7 +94,7 @@ func TestSort(t *testing.T) {
 			w := bufio.NewWriter(&buf)
 			require.NoError(t, Sort(w, in...))
 
-			expected, err := ioutil.ReadFile(out)
+			expected, err := os.ReadFile(out)
 			require.NoError(t, err)
 
 			require.NoError(t, w.Flush())
@@ -107,7 +106,7 @@ func TestSort(t *testing.T) {
 func listDirs(t *testing.T, dir string) []string {
 	t.Helper()
 
-	files, err := ioutil.ReadDir(dir)
+	files, err := os.ReadDir(dir)
 	require.NoError(t, err)
 
 	var dirs []string
@@ -134,11 +133,11 @@ func copyFiles(t *testing.T, in []string, dir string) []string {
 func copyFile(t *testing.T, f, dir string) string {
 	t.Helper()
 
-	data, err := ioutil.ReadFile(f)
+	data, err := os.ReadFile(f)
 	require.NoError(t, err)
 
-	dst := path.Join(dir, path.Base(f))
-	err = ioutil.WriteFile(dst, data, 0644)
+	dst := filepath.Join(dir, filepath.Base(f))
+	err = os.WriteFile(dst, data, 0644)
 	require.NoError(t, err)
 
 	return dst
