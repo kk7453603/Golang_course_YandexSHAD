@@ -1,7 +1,7 @@
 Методы и Интерфейсы
 Лекция 3
 
-Фёдор Короткий
+Павел Косицын
 
 * Methods
 
@@ -467,6 +467,20 @@ Output:
 
 * defer
 
+  func c() int {
+      var i int
+      defer func() { i++ }()
+      return i
+  }
+
+  fmt.Println(c())
+
+Output:
+
+  0
+
+* defer
+
   func main() {
       f(3)
   }
@@ -528,12 +542,22 @@ Output:
   }
 
   type Unwrapper interface {
-      Unwrap() error
+      // Before 1.21
+      // Unwrap() error
+
+      Unwrap() []error
   }
 
 Unwrap
 
+  // Works only with Unwrap() error
   errors.Unwrap(fmt.Errorf("... %w ...", ..., err, ...)) == err
+
+Join
+
+  combinedErr := errors.Join(err1, err2)
+
+  combinedErr = fmt.Errorf("%w\n%w", err1, err2)
 
 * errors.Is & errors.As
 
