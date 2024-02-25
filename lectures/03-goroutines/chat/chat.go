@@ -14,7 +14,7 @@ import (
 	"net"
 )
 
-//!+broadcaster
+// !+broadcaster
 type client chan<- string // an outgoing message channel
 
 var (
@@ -24,7 +24,7 @@ var (
 )
 
 func broadcaster() {
-	clients := make(map[client]bool) // all connected clients
+	clients := make(map[client]struct{}) // all connected clients
 	for {
 		select {
 		case msg := <-messages:
@@ -32,7 +32,7 @@ func broadcaster() {
 				cli <- msg
 			}
 		case cli := <-entering:
-			clients[cli] = true
+			clients[cli] = struct{}{}
 		case cli := <-leaving:
 			delete(clients, cli)
 			close(cli)
@@ -42,7 +42,7 @@ func broadcaster() {
 
 //!-broadcaster
 
-//!+handleConn
+// !+handleConn
 func handleConn(conn net.Conn) {
 	ch := make(chan string) // outgoing client messages
 	go clientWriter(conn, ch)
@@ -72,7 +72,7 @@ func clientWriter(conn net.Conn, ch <-chan string) {
 
 //!-handleConn
 
-//!+main
+// !+main
 func main() {
 	listener, err := net.Listen("tcp", "localhost:8000")
 	if err != nil {

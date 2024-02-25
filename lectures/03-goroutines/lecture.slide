@@ -1,12 +1,20 @@
 Горутины и каналы
 Лекция 4
 
-Фёдор Короткий
+Павел Косицын
 
 * Горутины
 
   f()    // call f(); wait for it to return
   go f() // create a new goroutine that calls f(); don't wait
+
+* Горутины vs потоки
+
+- Число инструкций context switch ~2.4k vs ~12k
+- Сколько можно запустить, чтобы не тормозило 100_000 vs 1000 (эмпирически)
+- Встроенная оптимизация системных вызовов да vs нет
+
+Больше на лекции про шедулер
 
 * Spinner Example
 
@@ -36,12 +44,16 @@
   x = <-ch // a receive expression in an assignment statement
   <-ch     // a receive statement; result is discarded
 
+* Channels
+
 - `close` закрывает канал.
 - _send_ будут паниковать.
 - _receive_ будут возвращать значения, которые успели записать в канал, и нулевые значения после этого.
 
   close(ch)
   ch <- x // panic
+
+.link https://github.com/golang/go/issues/44407 Отвергнутый пропозал rclose
 
 * Channel buffer
 
@@ -275,11 +287,11 @@
       go func() { worklist <- os.Args[1:] }()
 
       // Crawl the web concurrently.
-      seen := make(map[string]bool)
+      seen := make(map[string]struct{})
       for list := range worklist {
           for _, link := range list {
-              if !seen[link] {
-                  seen[link] = true
+              if _, ok := seen[link]; !ok {
+                  seen[link] = struct{}{}
                   go func(link string) {
                       worklist <- crawl(link)
                   }(link)
