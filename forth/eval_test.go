@@ -249,6 +249,16 @@ var testCases = []testCase{
 		input:       []string{": foo dup ;", ": dup 1 ;", "2 foo"},
 		expected:    []int{2, 2},
 	},
+	{
+		description: "redefine : to +",
+		input:       []string{": : + ;", "2 3 :"},
+		expected:    []int{5},
+	},
+	{
+		description: "redefine + to :",
+		input:       []string{": + : ;", "+ foo - ;", "2 3 foo"},
+		expected:    []int{-1},
+	},
 }
 
 func TestEval(t *testing.T) {
