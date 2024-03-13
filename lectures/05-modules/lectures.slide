@@ -1,7 +1,7 @@
 Modules
 Лекция 5
 
-Арсений Балобанов
+Павел Косицын
 
 * Before modules
 
@@ -656,5 +656,6 @@ Vendor dependencies.
 
 * Ссылки:
 
+.link https://go.dev/ref/mod - modules reference
 .link https://golang.org/cmd/go/ - go cmd
 .link https://play-with-go.dev/ - play-with-go
