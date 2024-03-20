@@ -16,10 +16,10 @@ type Memo struct {
 	cache map[string]result
 }
 
-type Func func(string) (interface{}, error)
+type Func func(string) (any, error)
 
 type result struct {
-	value interface{}
+	value any
 	err   error
 }
 
@@ -27,7 +27,7 @@ func New(f Func) *Memo {
 	return &Memo{f: f, cache: make(map[string]result)}
 }
 
-func (memo *Memo) Get(key string) (value interface{}, err error) {
+func (memo *Memo) Get(key string) (value any, err error) {
 	memo.mu.Lock()
 	res, ok := memo.cache[key]
 	memo.mu.Unlock()

@@ -1,7 +1,7 @@
 Concurrency with Shared Memory
 Лекция 5
 
-Фёдор Короткий
+Павел Косицын
 
 * Concurrency with Shared Memory
 
@@ -16,6 +16,11 @@ Concurrency with Shared Memory
 
   a := 1
   a += 1
+
+- Но внутри одной горутины `a`:=`1` *не* _happens_before_ `b`:=`1`
+
+  a := 1
+  b := 1
 
 - Посылка значения из канала _happens_before_ получения этого значения из канала.
 
@@ -62,7 +67,7 @@ Concurrency with Shared Memory
 
 * Data Race
 
-*Data*race* случается, когда несколько горутин одновременно работают с переменной, и хотябы одна из них пишет в эту переменную.
+*Data*race* случается, когда несколько горутин одновременно работают с переменной, и хотя бы одна из них пишет в эту переменную.
 
 Как защититься от _data_race_?
 
@@ -241,16 +246,16 @@ Concurrency with Shared Memory
 
 * sync.Map
 
-Что происходит, когда go совершает type cast из interface{}?
+Что происходит, когда go совершает type cast из any?
 
 - Приведение к конкретному типу требует одной проверки на `==`
 
-  var v interface{}
+  var v any
   x, ok := v.(int)
 
 - Приведение к интерфейсу требует (в общем случае) сравнивать method set.
 
-  var v interface{}
+  var v any
   x, ok := v.(io.Reader)
 
   // Конкретный тип v должен иметь метод Read([]byte) (int, error)
@@ -354,7 +359,7 @@ Concurrency with Shared Memory
     Err() error
 
     // Позволяет получить произвольный объект из контекста
-    Value(key interface{}) interface{}
+    Value(key any) any
   }
 
 - Отмена таймауты
@@ -397,8 +402,8 @@ Concurrency with Shared Memory
 
 По соглашению `Context` всегда передается первым параметром в функции, обычно именуясь `ctx`.
 
-  database/sql.(*DB).QueryContext(ctx context.Context, query string, args ...interface{}) (*Rows, error)
-  database/sql.(*DB).ExecContext(ctx context.Context, query string, args ...interface{}) (Result, error)
+  database/sql.(*DB).QueryContext(ctx context.Context, query string, args ...any) (*Rows, error)
+  database/sql.(*DB).ExecContext(ctx context.Context, query string, args ...any) (Result, error)
   net/http.NewRequestWithContext(ctx context.Context, method, url string, body io.Reader) (*Request, error)
   golang.org/x/sync/errgroup.WithContext(ctx context.Context) (*Group, context.Context)
   ...

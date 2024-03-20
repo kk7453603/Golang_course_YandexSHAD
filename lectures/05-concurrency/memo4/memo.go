@@ -12,10 +12,10 @@ package memo
 import "sync"
 
 // Func is the type of the function to memoize.
-type Func func(string) (interface{}, error)
+type Func func(string) (any, error)
 
 type result struct {
-	value interface{}
+	value any
 	err   error
 }
 
@@ -36,7 +36,7 @@ type entry struct {
 	ready chan struct{} // closed when res is ready
 }
 
-func (memo *Memo) Get(key string) (value interface{}, err error) {
+func (memo *Memo) Get(key string) (value any, err error) {
 	memo.mu.Lock()
 	e := memo.cache[key]
 	if e == nil {
