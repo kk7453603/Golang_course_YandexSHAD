@@ -1,7 +1,7 @@
 http
 Лекция 6
 
-Фёдор Короткий
+Павел Косицын
 
 * Имеем из коробки
 
@@ -127,7 +127,7 @@ http
 
 * Контекст в HTTP сервере
 
-.code context/httpserver/httpserver.go /type ReqTimeContextKey/,/^}/
+.code context/httpserver/httpserver.go /func runServer()/,/^}/
 
 * Контекст в HTTP сервере
 
@@ -157,6 +157,12 @@ http
 * Пример тестирования сервера
 
 .code context/httpserver/handler_test.go /func TestHandlerServeHTTP/,/^}/
+
+* Роутинг в http
+
+.play routing/httpserver.go /func main()/,/^}/
+
+.link https://tip.golang.org/blog/routing-enhancements Routing in go 1.22
 
 * Полезные библиотеки и фреймворки
 

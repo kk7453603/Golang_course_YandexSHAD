@@ -7,10 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 )
-
-type ReqTimeContextKey struct{}
 
 func runServer() error {
 	ctx, cancel := context.WithCancel(context.Background())
@@ -27,7 +24,6 @@ func runServer() error {
 		Addr:    ":8080",
 		Handler: handler{},
 		BaseContext: func(_ net.Listener) context.Context {
-			ctx = context.WithValue(ctx, ReqTimeContextKey{}, time.Now())
 			return ctx
 		},
 	}

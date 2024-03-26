@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,8 +10,9 @@ import (
 )
 
 func main() {
+	ctx := context.Background()
 	body := bytes.NewBufferString("All your base are belong to us")
-	req, err := http.NewRequest(http.MethodPost, "https://myapi.com/create", body)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://myapi.com/create", body)
 	if err != nil {
 		log.Fatal(err)
 	}
