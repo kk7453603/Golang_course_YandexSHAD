@@ -8,13 +8,13 @@ import (
 )
 
 type QueryerContext interface {
-	QueryContext(ctx context.Context, query string, args ...interface{}) (*sql.Rows, error)
-	QueryxContext(ctx context.Context, query string, args ...interface{}) (*sqlx.Rows, error)
-	QueryRowxContext(ctx context.Context, query string, args ...interface{}) *sqlx.Row
+	QueryContext(ctx context.Context, query string, args ...any) (*sql.Rows, error)
+	QueryxContext(ctx context.Context, query string, args ...any) (*sqlx.Rows, error)
+	QueryRowxContext(ctx context.Context, query string, args ...any) *sqlx.Row
 }
 
 type ExecerContext interface {
-	ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
+	ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error)
 }
 
 type ExtContext interface {

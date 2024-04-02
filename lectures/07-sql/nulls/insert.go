@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func Insert(ctx context.Context, db *sql.DB, name interface{}) {
+func Insert(ctx context.Context, db *sql.DB, name any) {
 	_, err := db.ExecContext(
 		ctx,
 		"INSERT INTO users(name) VALUES(@name)",

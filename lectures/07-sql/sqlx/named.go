@@ -11,7 +11,7 @@ func Insert(ctx context.Context, db *sqlx.DB) {
 	_, err := db.NamedExecContext(
 		ctx,
 		"INSERT INTO users(name) VALUES(:name)",
-		map[string]interface{}{
+		map[string]any{
 			"name": "Jukka Sarasti",
 		},
 	)

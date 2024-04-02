@@ -1,7 +1,7 @@
 database/sql
 Лекция 7
 
-Синельников Илья
+Косицын Павел
 
 * Способы работы с базами данных
 
@@ -170,18 +170,18 @@ database/sql
 
 * sqlx - StructScan
 
-  func (r *Rows) StructScan(dest interface{}) error
+  func (r *Rows) StructScan(dest any) error
 
-  func (r *Row) StructScan(dest interface{}) error
+  func (r *Row) StructScan(dest any) error
 
-  func StructScan(rows rowsi, dest interface{}) error
+  func StructScan(rows rowsi, dest any) error
 
   type rowsi interface {
       Close() error
       Columns() ([]string, error)
       Err() error
       Next() bool
-      Scan(...interface{}) error
+      Scan(...any) error
   }
 
 * sqlx - StructScan на практике
