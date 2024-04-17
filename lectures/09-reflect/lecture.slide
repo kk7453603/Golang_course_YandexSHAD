@@ -1,7 +1,7 @@
 reflect
 Лекция 9
 
-Короткий Фёдор
+Косицын Павел
 
 * Reflection
 
@@ -14,7 +14,7 @@ reflect
 Иногда нам нужно API, которое работает со значениями, которые не
 объединены общим интерфейсом.
 
-  func Sprint(x interface{}) string {
+  func Sprint(x any) string {
       type stringer interface {
           String() string
       }
@@ -38,7 +38,7 @@ reflect
 - Пакет `reflect` определяет два основных типа: `reflect.Type` и `reflect.Value`.
 - Единственная реализация `reflect.Type` - _type_descriptor_.
 
-  func TypeOf(interface{}) Type
+  func TypeOf(any) Type
 
 - Пример:
 
@@ -72,14 +72,14 @@ reflect
 - Метод `.Interface()` - обратная операция к `reflect.ValueOf`.
 
   v := reflect.ValueOf(3) // a reflect.Value
-  x := v.Interface()      // an interface{}
+  x := v.Interface()      // an any
   i := x.(int)            // an int
   fmt.Printf("%d\n", i)   // "3"
 
-* Разница между reflect.Value и interface{}
+* Разница между reflect.Value и any
 
 - Оба хранят любое значение.
-- `interface{}` - хранит значение, но не даёт доступа к нему. Можно достать конкретный тип, через _type_assertion_.
+- `any` - хранит значение, но не даёт доступа к нему. Можно достать конкретный тип, через _type_assertion_.
 - `reflect.Value` - предоставляет доступ к значению внутри, вне зависимости от типа этого значения.
 
 * format.Any
@@ -259,7 +259,7 @@ reflect
   var w io.Writer
   t := reflect.TypeOf(w) // t == ???
 
-  var v interface{} = w  // v == nil 
+  var v any = w  // v == nil
   t = reflect.TypeOf(v)  // t == ???
 
 - Чтобы получить `reflect.Type` равный интерфейсу, нужно использовать промежуточный указатель.

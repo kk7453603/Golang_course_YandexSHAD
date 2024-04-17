@@ -14,7 +14,7 @@ import (
 
 //!+Display
 
-func Display(name string, x interface{}) {
+func Display(name string, x any) {
 	fmt.Printf("Display %s (%T):\n", name, x)
 	display(name, reflect.ValueOf(x))
 }
@@ -50,7 +50,7 @@ func formatAtom(v reflect.Value) string {
 	}
 }
 
-//!+display
+// !+display
 func display(path string, v reflect.Value) {
 	switch v.Kind() {
 	case reflect.Invalid:

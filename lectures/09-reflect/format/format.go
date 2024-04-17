@@ -4,7 +4,7 @@
 // See page 332.
 
 // Package format provides an Any function that can format any value.
-//!+
+// !+
 package format
 
 import (
@@ -13,7 +13,7 @@ import (
 )
 
 // Any formats any value as a string.
-func Any(value interface{}) string {
+func Any(value any) string {
 	return formatAtom(reflect.ValueOf(value))
 }
 

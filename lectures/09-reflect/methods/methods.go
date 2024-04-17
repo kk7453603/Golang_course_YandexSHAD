@@ -12,9 +12,9 @@ import (
 	"strings"
 )
 
-//!+print
+// !+print
 // Print prints the method set of the value x.
-func Print(x interface{}) {
+func Print(x any) {
 	v := reflect.ValueOf(x)
 	t := v.Type()
 	fmt.Printf("type %s\n", t)

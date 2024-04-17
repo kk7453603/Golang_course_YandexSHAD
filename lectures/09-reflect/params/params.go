@@ -18,7 +18,7 @@ import (
 
 // Unpack populates the fields of the struct pointed to by ptr
 // from the HTTP request parameters in req.
-func Unpack(req *http.Request, ptr interface{}) error {
+func Unpack(req *http.Request, ptr any) error {
 	if err := req.ParseForm(); err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func Unpack(req *http.Request, ptr interface{}) error {
 
 //!-Unpack
 
-//!+populate
+// !+populate
 func populate(v reflect.Value, value string) error {
 	switch v.Kind() {
 	case reflect.String:

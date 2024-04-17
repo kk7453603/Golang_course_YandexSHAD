@@ -58,7 +58,7 @@ func Example_ptrToInterface() {
 }
 
 func Example_struct() {
-	Display("x", struct{ x interface{} }{3})
+	Display("x", struct{ x any }{3})
 	// Output:
 	// Display x (struct { x interface {} }):
 	// x.x.type = int
@@ -66,7 +66,7 @@ func Example_struct() {
 }
 
 func Example_interface() {
-	var i interface{} = 3
+	var i any = 3
 	Display("i", i)
 	// Output:
 	// Display i (int):
@@ -74,7 +74,7 @@ func Example_interface() {
 }
 
 func Example_ptrToInterface2() {
-	var i interface{} = 3
+	var i any = 3
 	Display("&i", &i)
 	// Output:
 	// Display &i (*interface {}):
@@ -83,7 +83,7 @@ func Example_ptrToInterface2() {
 }
 
 func Example_array() {
-	Display("x", [1]interface{}{3})
+	Display("x", [1]any{3})
 	// Output:
 	// Display x ([1]interface {}):
 	// x[0].type = int
